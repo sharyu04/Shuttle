@@ -1,4 +1,4 @@
-const Schedule = () => {
+const ScheduleCard = () => {
     return (
         <div className="flex flex-col text-lg block p-6 bg-white border border-gray-200 rounded-lg shadow w-2/3 m-auto">
             <p>Bus Id: <span className="font-semibold">34</span></p>
@@ -25,4 +25,4 @@ const Schedule = () => {
         </div>
     )
 }
-export default Schedule
+export default ScheduleCard
