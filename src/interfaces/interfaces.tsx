@@ -11,3 +11,15 @@ export interface userSignUpBody {
     password: string;
     company_id: number|undefined;
 }
+export interface userLoginBody{
+    email: string;
+    password: string;
+}
+export interface userDetails{
+        email: string;
+        first_name: string;
+        id: number;
+        last_name: string;
+        phone_number: string;
+        role_id: number
+    }

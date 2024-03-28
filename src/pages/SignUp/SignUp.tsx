@@ -1,35 +1,27 @@
 import { Field, Formik, Form } from "formik"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 import * as Yup from "yup"
 import YupPassword from "yup-password"
 import { postUser } from "../../apis/apiCalls"
 import { userSignUpBody } from "../../interfaces/interfaces"
 import 'react-toastify/dist/ReactToastify.css';
-// import { company } from "../../constants/constants"
 import "./SignUp.css"
 
 YupPassword(Yup)
-// interface valuesInterface {
-//     firstName: string;
-//     lastName: string;
-//     email: string;
-//     phnNo: string;
-//     company: number | null;
-//     password: string;
-// }
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
 const signUpSchema = Yup.object().shape({
     first_name: Yup.string().min(2, "Too short!").max(50, "Too long").required("Required"),
     last_name: Yup.string().min(2, "Too short!").max(50, "Too long").required("Required"),
     email: Yup.string().email("Invalid Email").required("Required"),
-    phone_number: Yup.string().matches(phoneRegExp, 'Phone number is not valid'),
+    phone_number: Yup.string().matches(phoneRegExp, 'Phone number is not valid').min(10,"Phone number must have 10 digits").max(10,"Phone number must have 10 digits"),
     password: Yup.string().min(6, "Password should have minimum 6 characters").minLowercase(1, "Password must contain atleast 1 lowercase letter").minUppercase(1, "Password must contain atleast 1 uppercase letter").minNumbers(1, "Password must contain atleast 1 number").minSymbols(1, "Password must contain atleast 1 special character").required("Password is required"),
     company_id: Yup.number().required("Enter a company id").min(1, "Invalid company id").max(5, "Invalid company id")
 });
 const SignUp = () => {
 
+    const navigate = useNavigate()
     const initialValues: userSignUpBody = {
         first_name: "",
         last_name: "",
@@ -49,7 +41,7 @@ const SignUp = () => {
                             validationSchema={signUpSchema}
                             onSubmit={(values: userSignUpBody) => {
                                 console.log(values)
-                                postUser(values)
+                                postUser(values, navigate)
 
                             }}
                         >
@@ -139,7 +131,7 @@ const SignUp = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer/>
+            <ToastContainer />
         </>
     )
 }

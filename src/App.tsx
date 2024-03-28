@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
+import MyContextProvider from './MyContext';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Schedule from './pages/Schedule/Schedule';
@@ -26,9 +27,11 @@ function App() {
         }
     ])
     return (
-        <div className="App">
-            <RouterProvider router={router} />
-        </div>
+        <MyContextProvider>
+            <div className="App">
+                <RouterProvider router={router} />
+            </div>
+        </MyContextProvider>
     );
 }
 
