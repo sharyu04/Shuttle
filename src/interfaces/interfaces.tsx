@@ -9,17 +9,26 @@ export interface userSignUpBody {
     phone_number: string;
     email: string;
     password: string;
-    company_id: number|undefined;
+    company_id: number | undefined;
 }
-export interface userLoginBody{
+export interface userLoginBody {
     email: string;
     password: string;
 }
-export interface userDetails{
-        email: string;
-        first_name: string;
-        id: number;
-        last_name: string;
-        phone_number: string;
-        role_id: number
-    }
+export interface userDetails {
+    email: string;
+    first_name: string;
+    id: number;
+    last_name: string;
+    phone_number: string;
+    role_id: number
+}
+export interface schedule {
+    id: number;
+    start_point: string;
+    arrival_time: string;
+    departure_time: string;
+    date: string;
+    bud_id: number;
+    available_seats: number;
+}

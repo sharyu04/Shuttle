@@ -11,7 +11,7 @@ import { IContext, MyContext } from "../../MyContext";
 
 const Login = () => {
     const navigate = useNavigate();
-    const {handleSetToken, handleSetUser} = React.useContext(MyContext) as IContext; 
+    const {handleSetUser} = React.useContext(MyContext) as IContext; 
     const initialValues: userLoginBody = {
         email: "",
         password: ""
@@ -38,7 +38,7 @@ const Login = () => {
                                 initialValues={initialValues}
                                 validationSchema={loginSchema}
                                 onSubmit={(values) => {
-                                    employeeLogin(values, navigate, handleSetToken, handleSetUser)
+                                    employeeLogin(values, navigate, handleSetUser)
                                 }}
                             >
                                 {({ errors, touched }) => (

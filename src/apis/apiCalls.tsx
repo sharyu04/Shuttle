@@ -1,6 +1,8 @@
+import axios from "axios"
 import { toast } from "react-toastify"
 import { userDetails, userLoginBody, userSignUpBody } from "../interfaces/interfaces"
 
+var bearerToken = ""
 export const postUser = (user: userSignUpBody, navigate: any) => {
     const response = fetch("http://localhost:3000/users", {
         method: 'POST',
@@ -25,7 +27,7 @@ export const postUser = (user: userSignUpBody, navigate: any) => {
         )
 }
 
-export const employeeLogin = (user: userLoginBody, navigate: any, handleSetToken: (bearerToken: string)=>void, handleSetUser: (user: userDetails)=> void) => {
+export const employeeLogin = (user: userLoginBody, navigate: any, handleSetUser: (user: userDetails) => void) => {
     const response = fetch("http://localhost:3000/login", {
         method: 'POST',
         headers: {
@@ -36,13 +38,27 @@ export const employeeLogin = (user: userLoginBody, navigate: any, handleSetToken
     response.then(async (res) => {
         const respJson = await res.json()
         if (res.status === 202) {
-            handleSetToken(respJson.token)
+            bearerToken = respJson.token
+            // console.log("bearerToken in function: ", bearerToken)
+            // handleSetToken(respJson.token)
             handleSetUser(respJson.user)
             navigate("/schedule")
-        }else if (res.status === 404) {
+        } else if (res.status === 404) {
             toast.error("Invalid Email")
-        }else {
+        } else {
             toast.error(respJson.error)
         }
     }).catch(err => console.log("err: ", err))
 }
+
+const api = axios.create({
+    baseURL: 'http://localhost:3001',
+})
+
+api.interceptors.request.use(config => {
+    const accessToken = bearerToken;
+    config.headers.Authorization = `Bearer ${accessToken}`;
+    return config;
+})
+
+export default api

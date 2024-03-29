@@ -1,0 +1,7 @@
+const ScheduleList = () => {
+    return (
+        <>
+
+        </>
+    )
+}

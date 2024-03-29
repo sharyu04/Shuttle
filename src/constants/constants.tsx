@@ -7,5 +7,7 @@ export const company = {
 }
 
 export const urls = {
-    userSignup: "http://localhost:3000/users"
+    userSignup: "http://localhost:3000/users",
+    getSchedules: "http://localhost:3000/schedules"
 }
+
