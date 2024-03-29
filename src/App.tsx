@@ -5,6 +5,7 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Schedule from './pages/Schedule/Schedule';
 import SignUp from './pages/SignUp/SignUp';
+import Create from './pages/Create/Create';
 
 
 function App() {
@@ -24,6 +25,10 @@ function App() {
         {
             path: "/schedule",
             element: <Schedule />
+        },
+        {
+            path: "/create",
+            element: <Create/>
         }
     ])
     return (
