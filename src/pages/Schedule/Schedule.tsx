@@ -1,18 +1,12 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import Navbar from "../../components/Navbar"
-import ScheduleCard from "../../components/ScheduleCard"
-import { useFetchSchedules } from "../../hooks/hooks"
-import { schedule } from "../../interfaces/interfaces";
+import ScheduleList from "../../components/ScheduleList"
 
 const Schedule = () => {
-    const {schedules}:{schedules: schedule[]} = useFetchSchedules();
-    useEffect(() => {
-            console.log("schedules: ",schedules)
-        },[schedules])
     return (
         <>
             <Navbar />
-            <ScheduleCard />
+            <ScheduleList/>
         </>
     )
 }
