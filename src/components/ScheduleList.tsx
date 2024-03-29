@@ -11,7 +11,7 @@ const ScheduleList = () => {
     return (
         <>
           {
-            schedules.map(schedule => <ScheduleCard/>)
+            schedules.map(schedule => <ScheduleCard key={schedule.id} schedule = {schedule}/>)
               }
         </>
     )

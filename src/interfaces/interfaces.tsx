@@ -33,7 +33,7 @@ export interface schedule {
   arrival_time: string;
   departure_time: string;
   date: string;
-  bud_id: number;
+  bus_id: number;
   available_seats: number;
 }
 export interface ICreateBus {
