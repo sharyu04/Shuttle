@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import { createReservation } from "../apis/apiCalls";
 import { ICreateReservation, schedule } from "../interfaces/interfaces"
 import { IContext, MyContext } from "../MyContext";
 import 'react-toastify/dist/ReactToastify.css';
 import { useQueryClient } from "@tanstack/react-query";
+// import { useFetchCompany } from "../hooks/hooks";
 
 interface IProps {
     schedule: schedule
@@ -12,6 +13,7 @@ interface IProps {
 const ScheduleCard = ({ schedule }: IProps) => {
     const queryClient = useQueryClient()
     const { user } = React.useContext(MyContext) as IContext;
+    // const { company } = useFetchCompany(schedule.company_id)
     const onReserve = () => {
         console.log("Schedule_id: ", schedule.id)
         console.log("User_id: ", user?.id)
@@ -21,6 +23,9 @@ const ScheduleCard = ({ schedule }: IProps) => {
         }
         createReservation(reqBody, queryClient, user)
     }
+    // useEffect(()=>{
+    //     console.log("company: ",company)
+    //     },[company])
     return (
         <>
             <div className="flex flex-col text-lg block p-6 bg-white border border-gray-200 rounded-lg shadow w-2/3 m-auto mt-3">
@@ -29,7 +34,6 @@ const ScheduleCard = ({ schedule }: IProps) => {
                     <div className="m-4">
                         <p>from</p>
                         <h5 className="font-semibold">{schedule.start_point}</h5>
-                        <p>short adress</p>
                         <p>{schedule.departure_time}</p>
                     </div>
                     <svg className="h-8 w-8 text-gray-900 m-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -37,8 +41,8 @@ const ScheduleCard = ({ schedule }: IProps) => {
                     </svg>
                     <div className="m-4">
                         <p>To</p>
-                        <h5 className="font-semibold">Company name</h5>
-                        <p>short adress</p>
+                        <h5 className="font-semibold">{schedule.company_name}</h5>
+                             <p>{schedule.company_location}</p>
                         <p>{schedule.arrival_time}</p>
                     </div>
                 </div>

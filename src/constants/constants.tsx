@@ -8,13 +8,15 @@ export const company = {
 
 export const urls = {
     userSignup: "http://localhost:3000/users",
-    getSchedules: "http://localhost:3000/schedules"
+    getSchedules: "http://localhost:3000/schedules",
+    getReservations: "http://localhost:3000/reservations"
 }
 
 export const sortByValues = {
-    busId: "BusId",
-    from: "from",
+    busId: "bus_id",
+    from: "start_point",
     to: "to",
     arrival_time: "arrival_time",
-    departure_time: "departure_time"
+    departure_time: "departure_time",
+    available_seats: "available_seats"
 }

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import api from "../apis/apiCalls"
 import { urls } from "../constants/constants"
-import { schedule, userDetails } from "../interfaces/interfaces"
+import { company, IReservation, schedule, userDetails } from "../interfaces/interfaces"
 
 export const useFetchCompanies = () => {
     const { data, error } = useQuery({
@@ -15,12 +15,27 @@ export const useFetchCompanies = () => {
 }
 
 export const useFetchCompany = (id: number) => {
+    const initialData: company = {
+        id: 0,
+        name: "",
+        location: ""
+    }
     const { data, error } = useQuery({
-        queryKey: ["companies"],
-        queryFn: () => fetch("http://localhost:3000/companies").then(res => res.json),
+        initialData: initialData,
+        queryKey: ["companies",id],
+        queryFn: () => fetch(`http://localhost:3000/companies/${id}`).then(res => {
+            const jsonBody = res.json()
+            return jsonBody
+        }).catch(err => {
+            return err
+        }),
     })
 
-    return { companies: data, error }
+    if (error !== null){
+            console.log(error)
+        }
+
+    return { company: data }
 }
 
 export const useFetchSchedules = (user: userDetails | null) => {
@@ -32,7 +47,7 @@ export const useFetchSchedules = (user: userDetails | null) => {
         queryFn: () => api.get(urls.getSchedules).then(res => {
             return res.data
         }).catch(err => {
-            console.log("err: ",err)
+            console.log("err: ", err)
             navigate("/login")
             // toast.error("Login required!")
             return err
@@ -46,3 +61,20 @@ export const useFetchSchedules = (user: userDetails | null) => {
     return { schedules: data }
 
 }
+
+export const useFetchReservations = () => {
+        const initialData: IReservation[] = []
+        const {data, error} = useQuery({
+                initialData: initialData,
+                queryKey: ["reservations"],
+                queryFn: () => api.get(urls.getReservations).then(res => {
+                    console.log(res.data)
+                   return  res.data
+                    
+                    }).catch(err => console.log(err))
+            })
+        if(error != null){
+                console.log(error)
+            }
+        return {reservations: data}
+    }

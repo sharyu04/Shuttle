@@ -73,7 +73,6 @@ export const createReservation = (reservationBody: ICreateReservation, queryClie
         toast("Reservation successfull")
         return console.log(res.data)
     }).catch(err => {
-        // if()
         toast.error(err.response.data[0])
         return console.log("err: ", err.response.status)
     })

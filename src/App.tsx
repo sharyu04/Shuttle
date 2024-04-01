@@ -6,6 +6,8 @@ import Login from './pages/Login/Login';
 import Schedule from './pages/Schedule/Schedule';
 import SignUp from './pages/SignUp/SignUp';
 import Create from './pages/Create/Create';
+import UserReservations from './pages/ViewReservations/UserReservations';
+import AdminReservationList from './pages/ViewReservations/AdminReservationList';
 
 
 function App() {
@@ -28,8 +30,16 @@ function App() {
         },
         {
             path: "/create",
-            element: <Create/>
-        }
+            element: <Create />
+        },
+        {
+            path: "/user_reservations",
+            element: <UserReservations />
+        },
+        {
+            path: "/all_reservations",
+            element: <AdminReservationList/>
+            }
     ])
     return (
         <MyContextProvider>
