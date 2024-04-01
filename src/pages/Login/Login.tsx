@@ -8,10 +8,12 @@ import { userLoginBody } from "../../interfaces/interfaces";
 import { employeeLogin } from "../../apis/apiCalls";
 import React from "react";
 import { IContext, MyContext } from "../../MyContext";
+// import { useQueryClient } from "@tanstack/react-query";
 
 const Login = () => {
+    // const queryClient = useQueryClient()
     const navigate = useNavigate();
-    const {handleSetUser} = React.useContext(MyContext) as IContext; 
+    const { handleSetUser } = React.useContext(MyContext) as IContext;
     const initialValues: userLoginBody = {
         email: "",
         password: ""
@@ -39,6 +41,9 @@ const Login = () => {
                                 validationSchema={loginSchema}
                                 onSubmit={(values) => {
                                     employeeLogin(values, navigate, handleSetUser)
+                                    // queryClient.refetchQueries({
+                                    //     queryKey: ["schedules"]
+                                    // })
                                 }}
                             >
                                 {({ errors, touched }) => (

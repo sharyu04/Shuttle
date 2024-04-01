@@ -1,8 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { IContext, MyContext } from "../MyContext";
 
 const Navbar = () => {
+    const navigate = useNavigate()
     const {user} = React.useContext(MyContext) as IContext; 
     return (
         <>
@@ -26,7 +27,11 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                    <div onClick={()=>{
+                        localStorage.removeItem("token")
+                        localStorage.removeItem("user")
+                        navigate("/login")
+                        }} className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                         <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">
                        <svg className="h-5 w-5 text-white-900" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />  <path d="M7 12h14l-3 -3m0 6l3 -3" /></svg> </button>
                     </div>

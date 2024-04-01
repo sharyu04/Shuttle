@@ -11,3 +11,10 @@ export const urls = {
     getSchedules: "http://localhost:3000/schedules"
 }
 
+export const sortByValues = {
+    busId: "BusId",
+    from: "from",
+    to: "to",
+    arrival_time: "arrival_time",
+    departure_time: "departure_time"
+}

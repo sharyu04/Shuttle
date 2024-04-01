@@ -1,6 +1,7 @@
 import axios from "axios"
+import { NavigateFunction } from "react-router-dom"
 import { toast } from "react-toastify"
-import { userDetails, userLoginBody, userSignUpBody } from "../interfaces/interfaces"
+import { ICreateReservation, userDetails, userLoginBody, userSignUpBody } from "../interfaces/interfaces"
 
 var bearerToken = ""
 export const postUser = (user: userSignUpBody, navigate: any) => {
@@ -27,7 +28,7 @@ export const postUser = (user: userSignUpBody, navigate: any) => {
         )
 }
 
-export const employeeLogin = (user: userLoginBody, navigate: any, handleSetUser: (user: userDetails) => void) => {
+export const employeeLogin = (user: userLoginBody, navigate: NavigateFunction, handleSetUser: (user: userDetails) => void) => {
     const response = fetch("http://localhost:3000/login", {
         method: 'POST',
         headers: {
@@ -39,9 +40,9 @@ export const employeeLogin = (user: userLoginBody, navigate: any, handleSetUser:
         const respJson = await res.json()
         if (res.status === 202) {
             bearerToken = respJson.token
-            // console.log("bearerToken in function: ", bearerToken)
-            // handleSetToken(respJson.token)
             handleSetUser(respJson.user)
+            localStorage.setItem("token", JSON.stringify(bearerToken))
+            localStorage.setItem("user", JSON.stringify(respJson.user))
             navigate("/schedule")
         } else if (res.status === 404) {
             toast.error("Invalid Email")
@@ -56,9 +57,28 @@ const api = axios.create({
 })
 
 api.interceptors.request.use(config => {
-    const accessToken = bearerToken;
+    const accessToken = JSON.parse(localStorage.getItem("token") || "");
     config.headers.Authorization = `Bearer ${accessToken}`;
     return config;
 })
+
+
+export const createReservation = (reservationBody: ICreateReservation, queryClient: any, user: userDetails | null) => {
+    const body = { reservation: reservationBody }
+    const response = api.post('http://localhost:3000/reservations', body)
+    response.then(res => {
+        queryClient.refetchQueries({
+            queryKey: ["schedules", user]
+        })
+        toast("Reservation successfull")
+        return console.log(res.data)
+    }).catch(err => {
+        // if()
+        toast.error(err.response.data[0])
+        return console.log("err: ", err.response.status)
+    })
+}
+
+
 
 export default api
