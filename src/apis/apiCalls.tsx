@@ -1,7 +1,7 @@
 import axios from "axios"
 import { NavigateFunction } from "react-router-dom"
 import { toast } from "react-toastify"
-import { ICreateReservation, userDetails, userLoginBody, userSignUpBody } from "../interfaces/interfaces"
+import { ICreateCompany, ICreateReservation, userDetails, userLoginBody, userSignUpBody, ICreateBus, ICreateSchedule } from "../interfaces/interfaces"
 
 var bearerToken = ""
 export const postUser = (user: userSignUpBody, navigate: any) => {
@@ -78,6 +78,31 @@ export const createReservation = (reservationBody: ICreateReservation, queryClie
     })
 }
 
+export const createCompany = (company: ICreateCompany) => {
+    const body = { company: company }
+    const response = api.post('http://localhost:3000/companies', body)
+    response.then(res => {
+        return toast.success("Company created successfully!")
+    })
+        .catch(err => toast.error(err.response.data[0]))
+}
 
+export const createBus = (bus: ICreateBus) => {
+    const body = { bus :bus }
+    const response = api.post('http://localhost:3000/buses/', body)
+    response.then(res => {
+        return toast.success("Bus created successfully!")
+    })
+        .catch(err => toast.error(err.response.data[0]))
+}
+
+export const createSchedule = (schedule: ICreateSchedule) => {
+    const body = { schedule :schedule }
+    const response = api.post('http://localhost:3000/schedules', body)
+    response.then(res => {
+        return toast.success("Schedule created successfully!")
+    })
+        .catch(err => toast.error(err.response.data[0]))
+}
 
 export default api

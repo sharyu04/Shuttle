@@ -74,3 +74,10 @@ export interface IReservation {
     first_name: string;
     last_name: string
 }
+export interface IBus {
+    id: number;
+    number: string;
+    capacity: number;
+    model:string;
+    company_id: number
+    }

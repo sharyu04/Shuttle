@@ -8,6 +8,7 @@ import SignUp from './pages/SignUp/SignUp';
 import Create from './pages/Create/Create';
 import UserReservations from './pages/ViewReservations/UserReservations';
 import AdminReservationList from './pages/ViewReservations/AdminReservationList';
+import ViewBuses from './pages/Buses/ViewBuses';
 
 
 function App() {
@@ -38,8 +39,12 @@ function App() {
         },
         {
             path: "/all_reservations",
-            element: <AdminReservationList/>
-            }
+            element: <AdminReservationList />
+        },
+        {
+            path: "/buses",
+            element: <ViewBuses />
+        }
     ])
     return (
         <MyContextProvider>

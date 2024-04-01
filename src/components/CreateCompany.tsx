@@ -2,13 +2,15 @@ import { Field, Form, Formik } from "formik"
 import { ICreateCompany } from "../interfaces/interfaces"
 import * as Yup from "yup"
 import { ToastContainer } from "react-toastify";
+import { createCompany } from "../apis/apiCalls";
+import 'react-toastify/dist/ReactToastify.css';
 
 const createCompanySchema = Yup.object().shape({
     name: Yup.string().required("Required"),
     location: Yup.string().required("Required"),
 });
 const CreateCompany = () => {
-    
+
     const initialValues: ICreateCompany = {
         name: "",
         location: ""
@@ -22,8 +24,10 @@ const CreateCompany = () => {
                         <Formik
                             initialValues={initialValues}
                             validationSchema={createCompanySchema}
-                            onSubmit={(values: ICreateCompany) => {
+                            onSubmit={(values: ICreateCompany, { resetForm }) => {
                                 console.log(values)
+                                resetForm();
+                                createCompany(values)
                             }}
                         >
                             {({ errors, touched }) => (
@@ -54,7 +58,7 @@ const CreateCompany = () => {
             </div>
             <ToastContainer />
         </>
-    
+
     )
 }
 

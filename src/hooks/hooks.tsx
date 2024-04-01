@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import api from "../apis/apiCalls"
 import { urls } from "../constants/constants"
-import { company, IReservation, schedule, userDetails } from "../interfaces/interfaces"
+import { company, IBus, IReservation, schedule, userDetails } from "../interfaces/interfaces"
 
 export const useFetchCompanies = () => {
     const { data, error } = useQuery({
@@ -22,7 +22,7 @@ export const useFetchCompany = (id: number) => {
     }
     const { data, error } = useQuery({
         initialData: initialData,
-        queryKey: ["companies",id],
+        queryKey: ["companies", id],
         queryFn: () => fetch(`http://localhost:3000/companies/${id}`).then(res => {
             const jsonBody = res.json()
             return jsonBody
@@ -31,9 +31,9 @@ export const useFetchCompany = (id: number) => {
         }),
     })
 
-    if (error !== null){
-            console.log(error)
-        }
+    if (error !== null) {
+        console.log(error)
+    }
 
     return { company: data }
 }
@@ -63,18 +63,35 @@ export const useFetchSchedules = (user: userDetails | null) => {
 }
 
 export const useFetchReservations = () => {
-        const initialData: IReservation[] = []
-        const {data, error} = useQuery({
-                initialData: initialData,
-                queryKey: ["reservations"],
-                queryFn: () => api.get(urls.getReservations).then(res => {
-                    console.log(res.data)
-                   return  res.data
-                    
-                    }).catch(err => console.log(err))
-            })
-        if(error != null){
-                console.log(error)
-            }
-        return {reservations: data}
+    const initialData: IReservation[] = []
+    const { data, error } = useQuery({
+        initialData: initialData,
+        queryKey: ["reservations"],
+        queryFn: () => api.get(urls.getReservations).then(res => {
+            console.log(res.data)
+            return res.data
+
+        }).catch(err => console.log(err))
+    })
+    if (error != null) {
+        console.log(error)
     }
+    return { reservations: data }
+}
+
+export const useFetchBuses = () => {
+    const initialData: IBus[] = []
+    const { data, error } = useQuery({
+        initialData: initialData,
+        queryKey: ["buses"],
+        queryFn: () => api.get("http://localhost:3000/buses/").then(res => {
+            console.log(res.data)
+            return res.data
+        }).catch(err => console.log(err))
+    })
+
+    if (error != null) {
+        console.log(error)
+    }
+    return {buses: data}
+}

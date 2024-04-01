@@ -2,6 +2,8 @@ import CreateBus from "../../components/CreateBus";
 import CreateCompany from "../../components/CreateCompany";
 import CreateSchedule from "../../components/CreateSchedule";
 import Navbar from "../../components/Navbar";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
 
 const Create = () => {
   return (
@@ -12,6 +14,7 @@ const Create = () => {
         <CreateBus />
         <CreateSchedule />
       </div>
+      <ToastContainer/>
     </>
   );
 };
