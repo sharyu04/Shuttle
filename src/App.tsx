@@ -11,6 +11,7 @@ import AdminReservationList from './pages/ViewReservations/AdminReservationList'
 import ViewBuses from './pages/Buses/ViewBuses';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import ViewUsers from './pages/Users/ViewUsers';
 
 
 function App() {
@@ -46,6 +47,10 @@ function App() {
         {
             path: "/buses",
             element: <ViewBuses />
+        },
+        {
+            path: "/users",
+            element: <ViewUsers />
         }
     ])
     return (

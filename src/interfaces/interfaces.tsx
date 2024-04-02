@@ -49,7 +49,7 @@ export interface ICreateBus {
 }
 export interface ICreateSchedule {
     start_point: string;
-    departure_time: string| null;
+    departure_time: string | null;
     arrival_time: string | null;
     date: string;
     bus_id: number;
@@ -78,6 +78,14 @@ export interface IBus {
     id: number;
     number: string;
     capacity: number;
-    model:string;
+    model: string;
     company_id: number
-    }
+}
+export interface IUser {
+    id: number;
+    first_name: string;
+    last_name: string;
+    phone_number: string;
+    email: string;
+    role_id: number
+}

@@ -113,8 +113,8 @@ export const deleteReservation = (id: number, queryClient: any) => {
         queryClient.refetchQueries({
             queryKey: ["reservations"]
         })
-        return console.log(res.data.message)
-    }).catch(err => console.log(err))
+        return toast.success(res.data.message)
+    }).catch(err => toast.error(err))
 }
 
 export const deleteBuses = (id: number, queryClient: any) => {
@@ -123,8 +123,8 @@ export const deleteBuses = (id: number, queryClient: any) => {
         queryClient.refetchQueries({
             queryKey: ["buses"]
         })
-        return console.log(res.data.message)
-    }).catch(err => console.log(err))
+        return toast.success(res.data.message)
+    }).catch(err => toast.error(err))
 }
 
 export default api

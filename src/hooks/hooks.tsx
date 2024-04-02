@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import api from "../apis/apiCalls"
 import { urls } from "../constants/constants"
-import { company, IBus, IReservation, schedule, userDetails } from "../interfaces/interfaces"
+import { company, IBus, IReservation, IUser, schedule, userDetails } from "../interfaces/interfaces"
 
 export const useFetchCompanies = () => {
     const { data, error } = useQuery({
@@ -94,4 +94,21 @@ export const useFetchBuses = () => {
         console.log(error)
     }
     return {buses: data}
+}
+
+export const useFetchUsers = () => {
+    const initialData: IUser[] = []
+    const { data, error } = useQuery({
+        initialData: initialData,
+        queryKey: ["buses"],
+        queryFn: () => api.get("http://localhost:3000/users").then(res => {
+            console.log(res.data)
+            return res.data
+        }).catch(err => console.log(err))
+    })
+
+    if (error != null) {
+        console.log(error)
+    }
+    return {userList: data}
 }
