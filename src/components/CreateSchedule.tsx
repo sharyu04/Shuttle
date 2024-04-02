@@ -1,6 +1,5 @@
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { ToastContainer } from "react-toastify";
 import { ICreateSchedule } from "../interfaces/interfaces";
 import { createSchedule } from "../apis/apiCalls";
 
@@ -17,7 +16,7 @@ const CreateSchedule = () => {
         departure_time: "",
         arrival_time: "",
         date: "",
-        bus_id: undefined
+        bus_id: NaN
     };
     return (
         <>
@@ -36,47 +35,52 @@ const CreateSchedule = () => {
                         >
                             {({ errors, touched }) => (
                                 <Form>
+                                    <label className="block mb-2 text-lg font-medium text-gray-900 mt-4">Start point</label>
                                     <Field
                                         type="text"
-                                        className="block border border-grey-light w-full p-3 rounded mt-4"
+                                        className="block border border-grey-light w-full p-3 rounded"
                                         name="start_point"
-                                        placeholder="Start point"
+                                        placeholder="Arai"
                                     />
                                     {errors.start_point && touched.start_point ? (
                                         <div>{errors.start_point}</div>
                                     ) : null}
+                                    <label className="block mb-2 text-lg font-medium text-gray-900 mt-4">Departure Time</label>
                                     <Field
-                                        type="text"
-                                        className="block border border-grey-light w-full p-3 rounded mt-4"
+                                        type="time"
+                                        className="block border border-grey-light w-full p-3 rounded "
                                         name="departure_time"
                                         placeholder="Departure time"
                                     />
                                     {errors.departure_time && touched.departure_time ? (
                                         <div>{errors.departure_time}</div>
                                     ) : null}
+                                    <label className="block mb-2 text-lg font-medium text-gray-900 mt-4">Arrival Time</label>
                                     <Field
-                                        type="text"
-                                        className="block border border-grey-light w-full p-3 rounded mt-4"
+                                        type="time"
+                                        className="block border border-grey-light w-full p-3 rounded "
                                         name="arrival_time"
                                         placeholder="Arrival time"
                                     />
                                     {errors.arrival_time && touched.arrival_time ? (
                                         <div>{errors.arrival_time}</div>
                                     ) : null}
+                                    <label className="block mb-2 text-lg font-medium text-gray-900 mt-4">Date</label>
                                     <Field
                                         type="date"
-                                        className="block border border-grey-light w-full p-3 rounded mt-4"
+                                        className="block border border-grey-light w-full p-3 rounded "
                                         name="date"
                                         placeholder="Date"
                                     />
                                     {errors.date && touched.date ? (
                                         <div>{errors.date}</div>
                                     ) : null}
+                                    <label className="block mb-2 text-lg font-medium text-gray-900 mt-4">Bus Id</label>
                                     <Field
                                         type="number"
-                                        className="block border border-grey-light w-full p-3 rounded mt-4"
+                                        className="block border border-grey-light w-full p-3 rounded "
                                         name="bus_id"
-                                        placeholder="Bus Id"
+                                        placeholder="1"
                                     />
                                     {errors.bus_id && touched.bus_id ? (
                                         <div>{errors.bus_id}</div>
@@ -94,7 +98,6 @@ const CreateSchedule = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </>
     );
 };

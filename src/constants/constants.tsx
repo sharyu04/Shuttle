@@ -20,3 +20,9 @@ export const sortByValues = {
     departure_time: "departure_time",
     available_seats: "available_seats"
 }
+
+export const components = {
+        createBus : "Bus",
+        createCompany : "company",
+        createSchedule : "schedule"
+    }

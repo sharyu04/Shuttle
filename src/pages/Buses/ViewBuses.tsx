@@ -4,11 +4,20 @@ import Navbar from "../../components/Navbar";
 import { IBus } from "../../interfaces/interfaces";
 import { IContext, MyContext } from "../../MyContext";
 import { useFetchBuses } from "../../hooks/hooks";
+import { useQueryClient } from "@tanstack/react-query";
+import { deleteBuses } from "../../apis/apiCalls";
 
 const ViewBuses = () => {
     const navigate = useNavigate()
     const { handleSetToken, handleSetUser } = React.useContext(MyContext) as IContext;
     const { buses }: { buses: IBus[] } = useFetchBuses()
+    const { user } = React.useContext(MyContext) as IContext;
+   const queryClient = useQueryClient() 
+    const handleDeleteClick = (id: number,e: any) => {
+            e.preventDefault()
+            // delete(id, queryClient) 
+            deleteBuses(id, queryClient)
+        }
     useEffect(() => {
         const token = localStorage.getItem("token")
         const userLocalStorage = localStorage.getItem("user")
@@ -43,6 +52,9 @@ const ViewBuses = () => {
                             <th scope="col" className="px-6 py-3">
                                 Company Id
                             </th>
+                            <th scope="col" className="px-6 py-3">
+                                
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,6 +75,9 @@ const ViewBuses = () => {
                                     </td>
                                     <td className="px-6 py-4">
                                         {bus.company_id}
+                                    </td>
+                                    <td className={`px-6 py-3 ${user?.role_id === 1 ? "hidden" : ""}`}>
+                                       <button onClick={(e) => {handleDeleteClick(bus.id,e)}}>Delete</button> 
                                     </td>
                                 </tr>
                             }

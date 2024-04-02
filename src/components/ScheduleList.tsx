@@ -6,7 +6,7 @@ import { IContext, MyContext } from "../MyContext";
 import ScheduleCard from "./ScheduleCard";
 
 const ScheduleList = () => {
-    
+
     const { user } = React.useContext(MyContext) as IContext;
     const { schedules }: { schedules: schedule[] } = useFetchSchedules(user);
     const [searchDropdown, setSearchDropdown] = useState<Boolean>(false)
@@ -84,20 +84,20 @@ const ScheduleList = () => {
                         }} />
 
                         <div>
-                            <select id="dropdownDefaultButton" data-dropdown-toggle="dropdown" onChange= {(e) => { setSortBy(e.target.value) }} className="mx-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" ><svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <select id="dropdownDefaultButton" data-dropdown-toggle="dropdown" onChange={(e) => { setSortBy(e.target.value) }} className="mx-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" ><svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                             </svg>
 
                                 <option className="block px-4 py-2 hover:bg-gray-100" value={sortByValues.busId} style={{ cursor: "pointer" }} >
                                     Bus Id
                                 </option>
-                                <option className="block px-4 py-2 hover:bg-gray-100" value={sortByValues.from}  style={{ cursor: "pointer" }} >
+                                <option className="block px-4 py-2 hover:bg-gray-100" value={sortByValues.from} style={{ cursor: "pointer" }} >
                                     From
                                 </option>
                                 <option className="block px-4 py-2 hover:bg-gray-100" value={sortByValues.arrival_time} style={{ cursor: "pointer" }} >
                                     Arrival Time
                                 </option>
-                                <option className="block px-4 py-2 hover:bg-gray-100" value={sortByValues.departure_time}  style={{ cursor: "pointer" }} >
+                                <option className="block px-4 py-2 hover:bg-gray-100" value={sortByValues.departure_time} style={{ cursor: "pointer" }} >
                                     Departure Time
                                 </option>
                                 <option className="block px-4 py-2 hover:bg-gray-100" value={sortByValues.available_seats} style={{ cursor: "pointer" }} >
@@ -121,6 +121,8 @@ const ScheduleList = () => {
                     }
                 }).map(schedule => <ScheduleCard key={schedule.id} schedule={schedule} />)
             }
+
+            
         </>
     )
 }

@@ -1,11 +1,18 @@
+import { useQueryClient } from "@tanstack/react-query";
 import React from "react";
+import { deleteReservation } from "../apis/apiCalls";
 import { IReservation } from "../interfaces/interfaces"
 import { IContext, MyContext } from "../MyContext";
 interface IProps {
     reservations: IReservation[];
 }
 const ReservationList = ({ reservations }: IProps) => {
-    const {user} = React.useContext(MyContext) as IContext; 
+    const { user } = React.useContext(MyContext) as IContext;
+   const queryClient = useQueryClient() 
+    const handleDeleteClick = (id: number,e: any) => {
+            e.preventDefault()
+            deleteReservation(id, queryClient) 
+        }
     return (
         <>
             <div className="relative overflow-x-auto">
@@ -33,6 +40,9 @@ const ReservationList = ({ reservations }: IProps) => {
                             <th scope="col" className="px-6 py-3">
                                 Departure Time
                             </th>
+                            <th scope="col" className="px-6 py-3">
+
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,26 +50,29 @@ const ReservationList = ({ reservations }: IProps) => {
                             reservations.map(resv => {
                                 return <tr key={resv.id} className="bg-white border-b">
                                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                       {resv.id} 
+                                        {resv.id}
                                     </th>
                                     <th scope="row" className={`px-6 py-4 font-medium text-gray-900 whitespace-nowrap ${user?.role_id === 1 ? "hidden" : ""}`}>
-                                       {resv.first_name} {resv.last_name} 
+                                        {resv.first_name} {resv.last_name}
                                     </th>
                                     <td className="px-6 py-4">
-                                       {resv.schedule.date} 
+                                        {resv.schedule.date}
                                     </td>
                                     <td className="px-6 py-4">
-                                       {resv.schedule.start_point} 
+                                        {resv.schedule.start_point}
                                     </td>
                                     <td className="px-6 py-4">
-                                       {resv.schedule.company_name} 
+                                        {resv.schedule.company_name}
                                     </td>
                                     <td className="px-6 py-4">
-                                       {resv.schedule.arrival_time}
+                                        {resv.schedule.arrival_time}
                                     </td>
                                     <td className="px-6 py-4">
-                                       {resv.schedule.departure_time} 
+                                        {resv.schedule.departure_time}
                                     </td>
+                                    <th scope="row" className={`px-6 py-4 font-medium text-gray-900 whitespace-nowrap ${user?.role_id === 1 ? "hidden" : ""}`}>
+                                       <button onClick={(e) => {handleDeleteClick(resv.id,e)}}>Delete</button> 
+                                    </th>
                                 </tr>
                             }
                             )

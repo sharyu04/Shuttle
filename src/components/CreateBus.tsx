@@ -1,21 +1,20 @@
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { ToastContainer } from "react-toastify";
 import { ICreateBus } from "../interfaces/interfaces";
 import { createBus } from "../apis/apiCalls";
 
 const createBusSchema = Yup.object().shape({
     number: Yup.string().required("Required"),
-    capacity: Yup.number().required("Required").min(10, "Minimum bus capacity is 10").max(100, "Bus capacity cannot exceed 100"),
+    capacity: Yup.number().typeError('Capacity must be a number').required("Required").min(10, "Minimum bus capacity is 10").max(100, "Bus capacity cannot exceed 100"),
     model: Yup.string().required("Required"),
-    company_id: Yup.number().required("Required"),
+    company_id: Yup.number().typeError('Capacity must be a number').required("Required"),
 });
 const CreateBus = () => {
     const initialValues: ICreateBus = {
         number: "",
-        capacity: undefined,
+        capacity: NaN,
         model: "",
-        company_id: undefined,
+        company_id: NaN,
     };
     return (
         <>
@@ -32,58 +31,59 @@ const CreateBus = () => {
                                 resetForm()
                             }}
                         >
-                            {({ errors, touched }) => (
-                                <Form>
-                                    <Field
-                                        type="text"
-                                        className="block border border-grey-light w-full p-3 rounded mt-4"
-                                        name="number"
-                                        placeholder="Bus Number"
-                                    />
-                                    {errors.number && touched.number ? (
-                                        <div>{errors.number}</div>
-                                    ) : null}
-                                    <Field
-                                        type="number"
-                                        className="block border border-grey-light w-full p-3 rounded mt-4"
-                                        name="capacity"
-                                        placeholder="Bus capacity"
-                                    />
-                                    {errors.capacity && touched.capacity ? (
-                                        <div>{errors.capacity}</div>
-                                    ) : null}
-                                    <Field
-                                        type="text"
-                                        className="block border border-grey-light w-full p-3 rounded mt-4"
-                                        name="model"
-                                        placeholder="Model type"
-                                    />
-                                    {errors.model && touched.model ? (
-                                        <div>{errors.model}</div>
-                                    ) : null}
-                                    <Field
-                                        type="number"
-                                        className="block border border-grey-light w-full p-3 rounded mt-4"
-                                        name="company_id"
-                                        placeholder="Company Id"
-                                    />
-                                    {errors.company_id && touched.company_id ? (
-                                        <div>{errors.company_id}</div>
-                                    ) : null}
-                                    <button
-                                        id="submit"
-                                        type="submit"
-                                        className="sign-up-btn w-full mt-4 text-center py-3 rounded text-white hover:bg-green-dark focus:outline-none my-1"
-                                    >
-                                        Create Bus
-                                    </button>
-                                </Form>
+                            {({ errors, touched}) => (
+                                <>
+                                    <Form>
+                                        <Field
+                                            type="text"
+                                            className="block border border-grey-light w-full p-3 rounded mt-4"
+                                            name="number"
+                                            placeholder="Bus Number"
+                                        />
+                                        {errors.number && touched.number ? (
+                                            <div>{errors.number}</div>
+                                        ) : null}
+                                        <Field
+                                            type="number"
+                                            className="block border border-grey-light w-full p-3 rounded mt-4"
+                                            name="capacity"
+                                            placeholder="Bus capacity"
+                                        />
+                                        {errors.capacity && touched.capacity ? (
+                                            <div>{errors.capacity}</div>
+                                        ) : null}
+                                        <Field
+                                            type="text"
+                                            className="block border border-grey-light w-full p-3 rounded mt-4"
+                                            name="model"
+                                            placeholder="Model type"
+                                        />
+                                        {errors.model && touched.model ? (
+                                            <div>{errors.model}</div>
+                                        ) : null}
+                                        <Field
+                                            type="number"
+                                            className="block border border-grey-light w-full p-3 rounded mt-4"
+                                            name="company_id"
+                                            placeholder="Company Id"
+                                        />
+                                        {errors.company_id && touched.company_id ? (
+                                            <div>{errors.company_id}</div>
+                                        ) : null}
+                                        <button
+                                            id="submit"
+                                            type="submit"
+                                            className="sign-up-btn w-full mt-4 text-center py-3 rounded text-white hover:bg-green-dark focus:outline-none my-1"
+                                        >
+                                            Create Bus
+                                        </button>
+                                    </Form>
+                                </>
                             )}
                         </Formik>
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </>
     );
 };

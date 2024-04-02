@@ -1,11 +1,9 @@
 import { Field, Formik, Form } from "formik"
 import { Link, useNavigate } from "react-router-dom"
-import { ToastContainer } from "react-toastify"
 import * as Yup from "yup"
 import YupPassword from "yup-password"
 import { postUser } from "../../apis/apiCalls"
 import { userSignUpBody } from "../../interfaces/interfaces"
-import 'react-toastify/dist/ReactToastify.css';
 import "./SignUp.css"
 
 YupPassword(Yup)
@@ -131,7 +129,6 @@ const SignUp = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </>
     )
 }

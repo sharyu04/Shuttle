@@ -9,6 +9,8 @@ import Create from './pages/Create/Create';
 import UserReservations from './pages/ViewReservations/UserReservations';
 import AdminReservationList from './pages/ViewReservations/AdminReservationList';
 import ViewBuses from './pages/Buses/ViewBuses';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 
 function App() {
@@ -51,6 +53,7 @@ function App() {
             <div className="App">
                 <RouterProvider router={router} />
             </div>
+            <ToastContainer/>
         </MyContextProvider>
     );
 }

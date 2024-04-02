@@ -49,10 +49,10 @@ export interface ICreateBus {
 }
 export interface ICreateSchedule {
     start_point: string;
-    departure_time: string;
-    arrival_time: string;
+    departure_time: string| null;
+    arrival_time: string | null;
     date: string;
-    bus_id: number | undefined;
+    bus_id: number;
 }
 export interface ICreateReservation {
     schedule_id: number;

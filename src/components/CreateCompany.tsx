@@ -1,9 +1,7 @@
 import { Field, Form, Formik } from "formik"
 import { ICreateCompany } from "../interfaces/interfaces"
 import * as Yup from "yup"
-import { ToastContainer } from "react-toastify";
 import { createCompany } from "../apis/apiCalls";
-import 'react-toastify/dist/ReactToastify.css';
 
 const createCompanySchema = Yup.object().shape({
     name: Yup.string().required("Required"),
@@ -56,7 +54,6 @@ const CreateCompany = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </>
 
     )

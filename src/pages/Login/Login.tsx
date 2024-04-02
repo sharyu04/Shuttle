@@ -1,8 +1,6 @@
 import { Field, Form, Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom"
-import { ToastContainer } from "react-toastify";
 import * as Yup from "yup"
-import 'react-toastify/dist/ReactToastify.css';
 import "./Login.css"
 import { userLoginBody } from "../../interfaces/interfaces";
 import { employeeLogin } from "../../apis/apiCalls";
@@ -73,7 +71,6 @@ const Login = () => {
                     </div>
                 </div>
             </section>
-            <ToastContainer />
         </div>
     )
 }
