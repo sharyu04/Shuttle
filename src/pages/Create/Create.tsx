@@ -2,11 +2,35 @@ import CreateBus from "../../components/CreateBus";
 import CreateCompany from "../../components/CreateCompany";
 import CreateSchedule from "../../components/CreateSchedule";
 import Navbar from "../../components/Navbar";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { components } from "../../constants/constants";
+import { IContext, MyContext } from "../../MyContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { userDetails } from "../../interfaces/interfaces";
 
 const Create = () => {
     const [activeComponent, setActiveComponent] = useState<string>(components.createCompany)
+    const navigate = useNavigate()
+    const {handleSetToken, handleSetUser } = React.useContext(MyContext) as IContext;
+    useEffect(() => {
+        const token = localStorage.getItem("token")
+        const userLocalStorage = localStorage.getItem("user")
+        if (token !== null && userLocalStorage !== null) {
+            handleSetToken(token)
+            handleSetUser(JSON.parse(userLocalStorage))
+            const userData: userDetails = JSON.parse(userLocalStorage)
+            if (userData === null || userData.role_id !== 2) {
+                navigate("/")
+                toast.error("You are not authorized to access this url")
+            }
+        }
+        else {
+            navigate("/login")
+            toast.error("Please login")
+        }
+
+    }, [])
     return (
         <>
             <Navbar />

@@ -1,26 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
-import { IUser } from "../../interfaces/interfaces";
+import { IUser, userDetails } from "../../interfaces/interfaces";
 import { IContext, MyContext } from "../../MyContext";
 import { useFetchUsers } from "../../hooks/hooks";
+import { toast } from "react-toastify";
 
 const ViewUsers = () => {
-    const navigate = useNavigate()
-    const { handleSetToken, handleSetUser } = React.useContext(MyContext) as IContext;
     const { userList }: { userList: IUser[] } = useFetchUsers()
     const [searchKey, setSearchKey] = useState<string>("")
 
+    const navigate = useNavigate()
+    const { handleSetToken, handleSetUser } = React.useContext(MyContext) as IContext;
     useEffect(() => {
         const token = localStorage.getItem("token")
         const userLocalStorage = localStorage.getItem("user")
         if (token !== null && userLocalStorage !== null) {
             handleSetToken(token)
             handleSetUser(JSON.parse(userLocalStorage))
+            const userData: userDetails = JSON.parse(userLocalStorage)
+            if (userData === null || userData.role_id !== 2) {
+                navigate("/")
+                toast.error("You are not authorized to access this url")
+            }
         }
         else {
             navigate("/login")
+            toast.error("Please login")
         }
+
     }, [])
     return (
         <>
@@ -41,7 +49,7 @@ const ViewUsers = () => {
                 </div>
             </form>
 
-            <div className="relative overflow-x-auto">
+            <div className="relative overflow-x-auto w-3/4 m-auto mt-8">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
@@ -87,7 +95,7 @@ const ViewUsers = () => {
                                         {userData.email}
                                     </td>
                                     <td className="px-6 py-4">
-                                       {userData.role_id}
+                                        {userData.role_id}
                                     </td>
                                 </tr>
                             }

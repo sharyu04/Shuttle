@@ -13,45 +13,47 @@ const ScheduleList = () => {
     const [searchKey, setSearchKey] = useState<string>("")
     const [sortedSchedules, setSortedSchedules] = useState<schedule[]>([])
 
+
     useEffect(() => {
-        console.log(schedules)
         var newSortedSchedule: schedule[] = []
-        switch (sortBy) {
-            case sortByValues.busId:
-                newSortedSchedule = [...schedules].sort((a, b) => {
-                    if (a.bus_id > b.bus_id) { return 1; }
-                    else if (a.bus_id < b.bus_id) { return -1; }
-                    else return 0;
-                })
-                break;
-            case sortByValues.from:
-                newSortedSchedule = [...schedules].sort((a, b) => {
-                    if (a.start_point.toLowerCase() > b.start_point.toLowerCase()) { return 1; }
-                    else if (a.start_point.toLowerCase() < b.start_point.toLowerCase()) { return -1; }
-                    else return 0;
-                })
-                break;
-            case sortByValues.arrival_time:
-                newSortedSchedule = [...schedules].sort((a, b) => {
-                    if (a.arrival_time > b.arrival_time) { return 1; }
-                    else if (a.arrival_time < b.arrival_time) { return -1; }
-                    else return 0;
-                })
-                break;
-            case sortByValues.departure_time:
-                newSortedSchedule = [...schedules].sort((a, b) => {
-                    if (a.departure_time > b.departure_time) { return 1; }
-                    else if (a.departure_time < b.departure_time) { return -1; }
-                    else return 0;
-                })
-                break;
-            case sortByValues.available_seats:
-                newSortedSchedule = [...schedules].sort((a, b) => {
-                    if (a.available_seats > b.available_seats) { return 1; }
-                    else if (a.available_seats < b.available_seats) { return -1; }
-                    else return 0;
-                })
-                break;
+        if (localStorage.getItem("token") !== null) {
+            switch (sortBy) {
+                case sortByValues.busId:
+                    newSortedSchedule = [...schedules].sort((a, b) => {
+                        if (a.bus_id > b.bus_id) { return 1; }
+                        else if (a.bus_id < b.bus_id) { return -1; }
+                        else return 0;
+                    })
+                    break;
+                case sortByValues.from:
+                    newSortedSchedule = [...schedules].sort((a, b) => {
+                        if (a.start_point.toLowerCase() > b.start_point.toLowerCase()) { return 1; }
+                        else if (a.start_point.toLowerCase() < b.start_point.toLowerCase()) { return -1; }
+                        else return 0;
+                    })
+                    break;
+                case sortByValues.arrival_time:
+                    newSortedSchedule = [...schedules].sort((a, b) => {
+                        if (a.arrival_time > b.arrival_time) { return 1; }
+                        else if (a.arrival_time < b.arrival_time) { return -1; }
+                        else return 0;
+                    })
+                    break;
+                case sortByValues.departure_time:
+                    newSortedSchedule = [...schedules].sort((a, b) => {
+                        if (a.departure_time > b.departure_time) { return 1; }
+                        else if (a.departure_time < b.departure_time) { return -1; }
+                        else return 0;
+                    })
+                    break;
+                case sortByValues.available_seats:
+                    newSortedSchedule = [...schedules].sort((a, b) => {
+                        if (a.available_seats > b.available_seats) { return 1; }
+                        else if (a.available_seats < b.available_seats) { return -1; }
+                        else return 0;
+                    })
+                    break;
+            }
         }
         setSortedSchedules(newSortedSchedule)
     }, [schedules, sortBy])
@@ -105,7 +107,7 @@ const ScheduleList = () => {
                     //     default:
                     //         return searchKey === "" ? schedule : schedule.start_point.toLowerCase().includes(searchKey.toLowerCase())
                     // }
-                                return searchKey === "" ? schedule : (schedule.start_point.toLowerCase().includes(searchKey.toLowerCase()) || schedule.company_name.toLowerCase().includes(searchKey.toLowerCase()) || schedule.arrival_time.toLowerCase().includes(searchKey.toLowerCase()) || schedule.departure_time.toLowerCase().includes(searchKey.toLowerCase()) || schedule.date.toLowerCase().includes(searchKey.toLowerCase()) || schedule.company_location.toLowerCase().includes(searchKey.toLowerCase()) || schedule.id === Number(searchKey) || schedule.bus_id === Number(searchKey) || schedule.available_seats === Number(searchKey))
+                    return searchKey === "" ? schedule : (schedule.start_point.toLowerCase().includes(searchKey.toLowerCase()) || schedule.company_name.toLowerCase().includes(searchKey.toLowerCase()) || schedule.arrival_time.toLowerCase().includes(searchKey.toLowerCase()) || schedule.departure_time.toLowerCase().includes(searchKey.toLowerCase()) || schedule.date.toLowerCase().includes(searchKey.toLowerCase()) || schedule.company_location.toLowerCase().includes(searchKey.toLowerCase()) || schedule.id === Number(searchKey) || schedule.bus_id === Number(searchKey) || schedule.available_seats === Number(searchKey))
                 }).map(schedule => <ScheduleCard key={schedule.id} schedule={schedule} />)
             }
 

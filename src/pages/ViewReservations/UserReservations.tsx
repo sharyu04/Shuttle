@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Navbar from "../../components/Navbar"
 import ReservationList from "../../components/ReservationList"
 import { useFetchReservations } from "../../hooks/hooks";
@@ -12,13 +13,13 @@ const UserReservations = () => {
     useEffect(() => {
         const token = localStorage.getItem("token")
         const userLocalStorage = localStorage.getItem("user")
-        // console.log("In use effect")
         if (token !== null && userLocalStorage !== null) {
             handleSetToken(token)
             handleSetUser(JSON.parse(userLocalStorage))
         }
         else {
             navigate("/login")
+            toast.error("Please Login")
         }
     }, [])
     const { reservations } = useFetchReservations();

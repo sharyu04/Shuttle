@@ -68,7 +68,7 @@ const ScheduleCard = ({ schedule }: IProps) => {
             {/* Modal */}
 
             <div id="default-modal" tabIndex={-1} aria-hidden="true" className={`${!toggle ? "hidden" : ""} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}>
-                <div className="relative p-4 w-full max-w-2xl max-h-full">
+                <div className="relative p-4 w-full max-w-2xl max-h-full inset-x-1/3 inset-y-1/4">
 
                     <div className="flex flex-col text-lg block p-6 bg-white border border-gray-200 rounded-lg shadow w-2/3 m-auto mt-3">
                         <p>Bus Id: <span className="font-semibold">{schedule.bus_id}</span></p>
@@ -89,7 +89,7 @@ const ScheduleCard = ({ schedule }: IProps) => {
                             </div>
                         </div>
 
-                        <div>
+                        <div className="flex justify-between">
                             <button onClick={(e) => { onCancelReservation(e) }} className="w-fit self-end bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                                 Cancel
                             </button>

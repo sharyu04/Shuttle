@@ -123,7 +123,7 @@ const ReservationList = ({ reservations }: IProps) => {
                 </div>
             </form>
 
-            <div className="relative overflow-x-auto">
+            <div className="relative overflow-x-auto w-3/4 m-auto mt-8 ">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
@@ -191,12 +191,12 @@ const ReservationList = ({ reservations }: IProps) => {
                 </table>
 
                 <div id="default-modal" tabIndex={-1} aria-hidden="true" className={`${!toggle ? "hidden" : ""} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}>
-                    <div className="relative p-4 w-full max-w-2xl max-h-full">
+                    <div className="relative p-4 w-full max-w-2xl max-h-full inset-x-1/3 inset-y-1/4">
 
                         <div className="flex flex-col text-lg block p-6 bg-white border border-gray-200 rounded-lg shadow w-2/3 m-auto mt-3">
-                            <p>Are you sure you want to delete the reservation</p>
-                            <div>
-                                <button onClick={(e) => { onCancelDeletion(e) }} className="w-fit self-end bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                            <p>Are you sure you want to delete the reservation ?</p>
+                            <div className="flex justify-end">
+                                <button onClick={(e) => { onCancelDeletion(e) }} className="w-fit self-end bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mr-4">
                                     No
                                 </button>
                                 <button onClick={(e) => { onConfirmDeletion(e) }} className="w-fit self-end bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">

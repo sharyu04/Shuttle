@@ -86,7 +86,7 @@ const CreateSchedule = () => {
                                         onChange={handleChange}
                                     >
 
-                                        <option value={undefined} hidden label="Select a company" className="text-gray-400">
+                                        <option value={undefined} hidden label="Select a Bus Id" className="text-gray-400">
                                             Select a BusId
                                         </option>
                                         {
@@ -100,18 +100,6 @@ const CreateSchedule = () => {
                                         }
                                     </Field>
                                     {errors.bus_id && touched.bus_id ? (<div>{errors.bus_id}</div>) : null}
-                                    {
-                                        //     <label className="block mb-2 text-lg font-medium text-gray-900 mt-4">Bus Id</label>
-                                        // <Field
-                                        //     type="number"
-                                        //     className="block border border-grey-light w-full p-3 rounded "
-                                        //     name="bus_id"
-                                        //     placeholder="1"
-                                        // />
-                                        // {errors.bus_id && touched.bus_id ? (
-                                        //     <div>{errors.bus_id}</div>
-                                        // ) : null}
-                                    }
                                     <button
                                         id="submit"
                                         type="submit"

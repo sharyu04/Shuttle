@@ -24,10 +24,7 @@ const Navbar = () => {
                                     <Link to="/" className={`block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${location.pathname===pages.Home ? "text-blue-700" : "text-gray-900 " }`} aria-current="page">Home</Link>
                                 </li>
                                 <li>
-                                    <Link to="/create" className={`block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${location.pathname===pages.Create ? "text-blue-700" : "text-gray-900 " } ${ user !== null && user.role_id === 1 ? "hidden" : ""}`} >Create</Link>
-                                </li>
-                                <li>
-                                    <Link to="/user_reservations" className={`block py-2 px-3  ${location.pathname===pages.MyReservations ? "text-blue-700" : "text-gray-900 " } rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${ user !== null && user.role_id === 1 ? "" : "hidden"}`} >My reservations</Link>
+                                    <Link to="/user_reservations" className={`py-2 px-3  ${location.pathname===pages.MyReservations ? "text-blue-700" : "text-gray-900 " } rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${ user !== null && user.role_id === 1 ? "" : "hidden"}`} >My reservations</Link>
                                 </li>
                                 <li>
                                     <Link to="/all_reservations" className={`block py-2 px-3 ${location.pathname===pages.ViewReservations ? "text-blue-700" : "text-gray-900 " } hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${ user !== null && user.role_id === 1 ? "hidden" : ""}`} >View reservations</Link>
@@ -37,6 +34,9 @@ const Navbar = () => {
                                 </li>
                                 <li>
                                     <Link to="/users" className={`block py-2 px-3 ${location.pathname===pages.ViewUsers ? "text-blue-700" : "text-gray-900 " } rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${ user !== null && user.role_id === 1 ? "hidden" : ""}`} >View Users</Link>
+                                </li>
+                                <li>
+                                    <Link to="/create" className={`block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${location.pathname===pages.Create ? "text-blue-700" : "text-gray-900 " } ${ user !== null && user.role_id === 1 ? "hidden" : ""}`} >Create</Link>
                                 </li>
                             </ul>
                         </div>

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Navbar from "../../components/Navbar"
 import ScheduleList from "../../components/ScheduleList"
 import { IContext, MyContext } from "../../MyContext";
@@ -11,13 +12,13 @@ const Schedule = () => {
     useEffect(() => {
         const token = localStorage.getItem("token")
         const userLocalStorage = localStorage.getItem("user")
-        // console.log("In use effect")
         if (token !== null && userLocalStorage !== null) {
             handleSetToken(token)
             handleSetUser(JSON.parse(userLocalStorage))
         }
         else {
             navigate("/login")
+            toast.error("Please Login")
         }
     }, [])
     return (
