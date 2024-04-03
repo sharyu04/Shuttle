@@ -44,7 +44,7 @@ export const employeeLogin = (user: userLoginBody, navigate: NavigateFunction, h
             handleSetUser(respJson.user)
             localStorage.setItem("token", JSON.stringify(bearerToken))
             localStorage.setItem("user", JSON.stringify(respJson.user))
-            navigate("/schedule")
+            navigate("/")
         } else if (res.status === 404) {
             toast.error("Invalid Email")
         } else {

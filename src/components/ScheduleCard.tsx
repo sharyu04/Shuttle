@@ -19,7 +19,7 @@ const ScheduleCard = ({ schedule }: IProps) => {
         setToggle(true)
     }
 
-    const onConfirmReservation = (e:any) => {
+    const onConfirmReservation = (e: any) => {
         e.preventDefault()
         console.log("Schedule_id: ", schedule.id)
         console.log("User_id: ", user?.id)
@@ -30,15 +30,20 @@ const ScheduleCard = ({ schedule }: IProps) => {
         createReservation(reqBody, queryClient, user)
         setToggle(false)
     }
-    const onCancelReservation = (e:any) => {
+    const onCancelReservation = (e: any) => {
         e.preventDefault()
         setToggle(false)
     }
 
     return (
         <>
-            <div className="flex flex-col text-lg block p-6 bg-white border border-gray-200 rounded-lg shadow w-2/3 m-auto mt-3">
-                <p>Bus Id: <span className="font-semibold">{schedule.bus_id}</span></p>
+            <div className="flex flex-col text-lg block p-6 bg-white border border-gray-200 rounded-lg shadow w-9/12 m-auto mt-3">
+                <div className="flex items-center justify-between">
+                    <p>Bus Id: <span className="font-semibold">{schedule.bus_id}</span></p>
+                    <div className="w-fit self-end bg-transparent text-blue-700 py-2 px-4 border border-blue-500">
+                        Seats available: {schedule.available_seats}
+                    </div>
+                </div>
                 <div className="flex items-center">
                     <div className="m-4">
                         <p>from</p>
@@ -55,17 +60,14 @@ const ScheduleCard = ({ schedule }: IProps) => {
                         <p>{schedule.arrival_time}</p>
                     </div>
                 </div>
-                <div className="w-fit self-end bg-transparent text-blue-700 py-2 px-4 border border-blue-500">
-                    Seats available: {schedule.available_seats}
-                </div>
-                <button onClick={(e) => {onReserve(e)}} className="w-fit self-end bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                <button onClick={(e) => { onReserve(e) }} className="w-fit self-end bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                     Reserve
                 </button>
             </div>
 
             {/* Modal */}
 
-            <div id="default-modal" tabIndex={-1} aria-hidden="true" className={`${!toggle ? "hidden":""} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}>
+            <div id="default-modal" tabIndex={-1} aria-hidden="true" className={`${!toggle ? "hidden" : ""} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}>
                 <div className="relative p-4 w-full max-w-2xl max-h-full">
 
                     <div className="flex flex-col text-lg block p-6 bg-white border border-gray-200 rounded-lg shadow w-2/3 m-auto mt-3">
@@ -88,12 +90,12 @@ const ScheduleCard = ({ schedule }: IProps) => {
                         </div>
 
                         <div>
-                        <button onClick={(e) => {onCancelReservation(e)}} className="w-fit self-end bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                           Cancel
-                        </button>
-                        <button onClick={(e) => {onConfirmReservation(e)}} className="w-fit self-end bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                            Confirm Reservation
-                        </button>
+                            <button onClick={(e) => { onCancelReservation(e) }} className="w-fit self-end bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                                Cancel
+                            </button>
+                            <button onClick={(e) => { onConfirmReservation(e) }} className="w-fit self-end bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                                Confirm Reservation
+                            </button>
                         </div>
                     </div>
                 </div>

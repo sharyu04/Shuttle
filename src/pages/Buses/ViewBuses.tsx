@@ -12,20 +12,21 @@ const ViewBuses = () => {
     const { handleSetToken, handleSetUser } = React.useContext(MyContext) as IContext;
     const { buses }: { buses: IBus[] } = useFetchBuses()
     const { user } = React.useContext(MyContext) as IContext;
-   const queryClient = useQueryClient() 
-   const [toggle, setToggle] = useState<Boolean>(false)
+    const queryClient = useQueryClient()
+    const [toggle, setToggle] = useState<Boolean>(false)
     const [id, setId] = useState<number>(0)
+    const [searchKey, setSearchKey] = useState<string>("")
     const handleDeleteClick = (id: number, e: any) => {
         e.preventDefault()
         setId(id)
         setToggle(true)
     }
-    const onConfirmDeletion = (e:any) => {
+    const onConfirmDeletion = (e: any) => {
         e.preventDefault()
         deleteBuses(id, queryClient)
         setToggle(false)
     }
-    const onCancelDeletion = (e:any) => {
+    const onCancelDeletion = (e: any) => {
         e.preventDefault()
         setToggle(false)
     }
@@ -44,6 +45,22 @@ const ViewBuses = () => {
     return (
         <>
             <Navbar />
+
+            <form className="w-9/12 mx-auto">
+                <div className="flex items-center justify-between">
+
+                    <div className="flex">
+                        <div className="relative w-full">
+                            <input type="search" id="search-dropdown" className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border-s-gray border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Search reservations ..." value={searchKey} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                e.preventDefault()
+                                setSearchKey(e.target.value)
+                                console.log(searchKey)
+                            }} />
+                        </div>
+                    </div>
+                </div>
+            </form>
+
 
             <div className="relative overflow-x-auto">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -65,13 +82,15 @@ const ViewBuses = () => {
                                 Company Id
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                
+
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            buses.map(bus => {
+                            buses.filter(bus => {
+                                return searchKey === "" ? bus : (bus.model.toLowerCase().includes(searchKey.toLowerCase()) || bus.number.toLowerCase().includes(searchKey.toLowerCase()) || bus.id === Number(searchKey) || bus.company_id === Number(searchKey) || bus.capacity === Number(searchKey))
+                            }).map(bus => {
                                 return <tr key={bus.id} className="bg-white border-b">
                                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         {bus.id}
@@ -89,7 +108,7 @@ const ViewBuses = () => {
                                         {bus.company_id}
                                     </td>
                                     <td className={`px-6 py-4 font-medium text-gray-900 whitespace-nowrap ${user?.role_id === 1 ? "hidden" : ""}`}>
-                                       <button onClick={(e) => {handleDeleteClick(bus.id,e)}}>Delete</button> 
+                                        <button onClick={(e) => { handleDeleteClick(bus.id, e) }}>Delete</button>
                                     </td>
                                 </tr>
                             }

@@ -6,12 +6,16 @@ import { urls } from "../constants/constants"
 import { company, IBus, IReservation, IUser, schedule, userDetails } from "../interfaces/interfaces"
 
 export const useFetchCompanies = () => {
+   const initialData: company[] = []  
     const { data, error } = useQuery({
+        initialData: initialData,
         queryKey: ["companies"],
-        queryFn: () => fetch("http://localhost:3000/companies").then(res => res.json),
+        queryFn: () => fetch("http://localhost:3000/companies").then(res => res.json()).catch(err => err),
     })
-
-    return { companies: data, error }
+    if(error !== null){
+        console.log(error)
+        }
+    return { companies: data }
 }
 
 export const useFetchCompany = (id: number) => {

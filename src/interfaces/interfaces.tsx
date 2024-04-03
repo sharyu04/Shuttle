@@ -1,4 +1,3 @@
-import { number, string } from "yup";
 
 export interface company {
     id: number;
@@ -52,7 +51,7 @@ export interface ICreateSchedule {
     departure_time: string | null;
     arrival_time: string | null;
     date: string;
-    bus_id: number;
+    bus_id: number | undefined;
 }
 export interface ICreateReservation {
     schedule_id: number;

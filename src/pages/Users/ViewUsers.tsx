@@ -4,15 +4,12 @@ import Navbar from "../../components/Navbar";
 import { IUser } from "../../interfaces/interfaces";
 import { IContext, MyContext } from "../../MyContext";
 import { useFetchUsers } from "../../hooks/hooks";
-import { useQueryClient } from "@tanstack/react-query";
-import { deleteBuses } from "../../apis/apiCalls";
 
 const ViewUsers = () => {
     const navigate = useNavigate()
     const { handleSetToken, handleSetUser } = React.useContext(MyContext) as IContext;
     const { userList }: { userList: IUser[] } = useFetchUsers()
-    const { user } = React.useContext(MyContext) as IContext;
-   const queryClient = useQueryClient() 
+    const [searchKey, setSearchKey] = useState<string>("")
 
     useEffect(() => {
         const token = localStorage.getItem("token")
@@ -28,6 +25,21 @@ const ViewUsers = () => {
     return (
         <>
             <Navbar />
+
+            <form className="w-9/12 mx-auto">
+                <div className="flex items-center justify-between">
+
+                    <div className="flex">
+                        <div className="relative w-full">
+                            <input type="search" id="search-dropdown" className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border-s-gray border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Search users ..." value={searchKey} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                e.preventDefault()
+                                setSearchKey(e.target.value)
+                                console.log(searchKey)
+                            }} />
+                        </div>
+                    </div>
+                </div>
+            </form>
 
             <div className="relative overflow-x-auto">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -55,7 +67,9 @@ const ViewUsers = () => {
                     </thead>
                     <tbody>
                         {
-                            userList.map(userData => {
+                            userList.filter(user => {
+                                return searchKey === "" ? user : (user.first_name.toLowerCase().includes(searchKey.toLowerCase()) || user.last_name.toLowerCase().includes(searchKey.toLowerCase()) || user.email.toLowerCase().includes(searchKey.toLowerCase()) || user.phone_number.toLowerCase().includes(searchKey.toLowerCase()) || user.id === Number(searchKey) || user.role_id === Number(searchKey))
+                            }).map(userData => {
                                 return <tr key={userData.id} className="bg-white border-b">
                                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         {userData.id}

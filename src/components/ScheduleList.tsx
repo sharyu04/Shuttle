@@ -9,9 +9,7 @@ const ScheduleList = () => {
 
     const { user } = React.useContext(MyContext) as IContext;
     const { schedules }: { schedules: schedule[] } = useFetchSchedules(user);
-    const [searchDropdown, setSearchDropdown] = useState<Boolean>(false)
     const [sortBy, setSortBy] = useState<string>(sortByValues.busId)
-    const [searchBy, setSearchBy] = useState<string>(sortByValues.from)
     const [searchKey, setSearchKey] = useState<string>("")
     const [sortedSchedules, setSortedSchedules] = useState<schedule[]>([])
 
@@ -60,52 +58,40 @@ const ScheduleList = () => {
     return (
         <>
 
-            <form className="max-w-lg mx-auto">
-                <div className="flex">
+            <form className="w-9/12 mx-auto">
+                <div className="flex items-center justify-between">
+                    <div className="flex">
+                        <div className="relative w-full">
+                            <input type="search" id="search-dropdown" className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border-s-gray border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Search Schedules ..." value={searchKey} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                e.preventDefault()
+                                setSearchKey(e.target.value)
+                                console.log(searchKey)
+                            }} />
+                        </div>
+                    </div>
+
                     <div>
-                        <select onClick={() => { setSearchDropdown(!searchDropdown) }} id="dropdownDefaultButton" data-dropdown-toggle="dropdown" className="mx-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" ><svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <select id="dropdownDefaultButton" data-dropdown-toggle="dropdown" onChange={(e) => { setSortBy(e.target.value) }} className="mx-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" ><svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                         </svg>
 
-                            <option className="block px-4 py-2 hover:bg-gray-100" onClick={() => { setSearchBy(sortByValues.from) }} style={{ cursor: "pointer" }} >
-                                From
-                            </option>
-                            <option className="block px-4 py-2 hover:bg-gray-100" onClick={() => { setSearchBy(sortByValues.busId) }} style={{ cursor: "pointer" }} >
+                            <option className="block px-4 py-2 hover:bg-gray-100" value={sortByValues.busId} style={{ cursor: "pointer" }} >
                                 Bus Id
                             </option>
+                            <option className="block px-4 py-2 hover:bg-gray-100" value={sortByValues.from} style={{ cursor: "pointer" }} >
+                                From
+                            </option>
+                            <option className="block px-4 py-2 hover:bg-gray-100" value={sortByValues.arrival_time} style={{ cursor: "pointer" }} >
+                                Arrival Time
+                            </option>
+                            <option className="block px-4 py-2 hover:bg-gray-100" value={sortByValues.departure_time} style={{ cursor: "pointer" }} >
+                                Departure Time
+                            </option>
+                            <option className="block px-4 py-2 hover:bg-gray-100" value={sortByValues.available_seats} style={{ cursor: "pointer" }} >
+                                Available Seats
+                            </option>
+
                         </select>
-                    </div>
-
-                    <div className="relative w-full">
-                        <input type="search" id="search-dropdown" className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Search Mockups, Logos, Design Templates..." value={searchKey} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            e.preventDefault()
-                            setSearchKey(e.target.value)
-                            console.log(searchKey)
-                        }} />
-
-                        <div>
-                            <select id="dropdownDefaultButton" data-dropdown-toggle="dropdown" onChange={(e) => { setSortBy(e.target.value) }} className="mx-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" ><svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                            </svg>
-
-                                <option className="block px-4 py-2 hover:bg-gray-100" value={sortByValues.busId} style={{ cursor: "pointer" }} >
-                                    Bus Id
-                                </option>
-                                <option className="block px-4 py-2 hover:bg-gray-100" value={sortByValues.from} style={{ cursor: "pointer" }} >
-                                    From
-                                </option>
-                                <option className="block px-4 py-2 hover:bg-gray-100" value={sortByValues.arrival_time} style={{ cursor: "pointer" }} >
-                                    Arrival Time
-                                </option>
-                                <option className="block px-4 py-2 hover:bg-gray-100" value={sortByValues.departure_time} style={{ cursor: "pointer" }} >
-                                    Departure Time
-                                </option>
-                                <option className="block px-4 py-2 hover:bg-gray-100" value={sortByValues.available_seats} style={{ cursor: "pointer" }} >
-                                    Available Seats
-                                </option>
-
-                            </select>
-                        </div>
                     </div>
                 </div>
             </form>
@@ -113,16 +99,17 @@ const ScheduleList = () => {
             {
 
                 sortedSchedules.filter(schedule => {
-                    switch (searchBy) {
-                        case sortByValues.busId:
-                            return searchKey === "" ? schedule : schedule.bus_id === Number(searchKey)
-                        default:
-                            return searchKey === "" ? schedule : schedule.start_point.toLowerCase().includes(searchKey.toLowerCase())
-                    }
+                    // switch (searchBy) {
+                    //     case sortByValues.busId:
+                    //         return searchKey === "" ? schedule : schedule.bus_id === Number(searchKey)
+                    //     default:
+                    //         return searchKey === "" ? schedule : schedule.start_point.toLowerCase().includes(searchKey.toLowerCase())
+                    // }
+                                return searchKey === "" ? schedule : (schedule.start_point.toLowerCase().includes(searchKey.toLowerCase()) || schedule.company_name.toLowerCase().includes(searchKey.toLowerCase()) || schedule.arrival_time.toLowerCase().includes(searchKey.toLowerCase()) || schedule.departure_time.toLowerCase().includes(searchKey.toLowerCase()) || schedule.date.toLowerCase().includes(searchKey.toLowerCase()) || schedule.company_location.toLowerCase().includes(searchKey.toLowerCase()) || schedule.id === Number(searchKey) || schedule.bus_id === Number(searchKey) || schedule.available_seats === Number(searchKey))
                 }).map(schedule => <ScheduleCard key={schedule.id} schedule={schedule} />)
             }
 
-            
+
         </>
     )
 }

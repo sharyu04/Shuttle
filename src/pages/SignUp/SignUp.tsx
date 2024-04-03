@@ -1,9 +1,11 @@
 import { Field, Formik, Form } from "formik"
+import { useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import * as Yup from "yup"
 import YupPassword from "yup-password"
 import { postUser } from "../../apis/apiCalls"
-import { userSignUpBody } from "../../interfaces/interfaces"
+import { useFetchCompanies } from "../../hooks/hooks"
+import { userSignUpBody, company } from "../../interfaces/interfaces"
 import "./SignUp.css"
 
 YupPassword(Yup)
@@ -13,12 +15,11 @@ const signUpSchema = Yup.object().shape({
     first_name: Yup.string().min(2, "Too short!").max(50, "Too long").required("Required"),
     last_name: Yup.string().min(2, "Too short!").max(50, "Too long").required("Required"),
     email: Yup.string().email("Invalid Email").required("Required"),
-    phone_number: Yup.string().matches(phoneRegExp, 'Phone number is not valid').min(10,"Phone number must have 10 digits").max(10,"Phone number must have 10 digits"),
+    phone_number: Yup.string().matches(phoneRegExp, 'Phone number is not valid').min(10, "Phone number must have 10 digits").max(10, "Phone number must have 10 digits"),
     password: Yup.string().min(6, "Password should have minimum 6 characters").minLowercase(1, "Password must contain atleast 1 lowercase letter").minUppercase(1, "Password must contain atleast 1 uppercase letter").minNumbers(1, "Password must contain atleast 1 number").minSymbols(1, "Password must contain atleast 1 special character").required("Password is required"),
-    company_id: Yup.number().required("Enter a company id").min(1, "Invalid company id").max(5, "Invalid company id")
-});
+    company_id: Yup.number().required("Enter a company id")});
 const SignUp = () => {
-
+    const { companies }: { companies: company[] } = useFetchCompanies()
     const navigate = useNavigate()
     const initialValues: userSignUpBody = {
         first_name: "",
@@ -28,6 +29,11 @@ const SignUp = () => {
         password: "",
         company_id: undefined
     }
+
+    useEffect(() => {
+        console.log(companies)
+    }, [companies])
+
     return (
         <>
             <div className="bg-grey-lighter min-h-screen flex flex-col">
@@ -38,12 +44,11 @@ const SignUp = () => {
                             initialValues={initialValues}
                             validationSchema={signUpSchema}
                             onSubmit={(values: userSignUpBody) => {
-                                console.log(values)
                                 postUser(values, navigate)
 
                             }}
                         >
-                            {({ errors, touched }) => (
+                            {({ errors, touched, values, handleChange }) => (
                                 <Form>
                                     <Field
                                         type="text"
@@ -69,40 +74,27 @@ const SignUp = () => {
                                         name="phone_number"
                                         placeholder="Phone Number" />
                                     {errors.phone_number && touched.phone_number ? (<div>{errors.phone_number}</div>) : null}
-                                    {
-                                        //     <Field
-                                        //     as="select"
-                                        //     type="number"
-                                        //     name="company"
-                                        //     className="bg-transparent block border border-grey-light w-full p-3 rounded mt-4 text-gray-400"
-                                        //     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>{parseInt(e.target.value, 10)}}
-                                        // >
-                                        //     <option value={0} hidden label="Select a company">
-                                        //         Select a company
-                                        //     </option>
-                                        //     <option value={company.JoshSoftware}>
-                                        //        Josh Software 
-                                        //     </option>
-                                        //     <option value={company.Tcs}>
-                                        //         Tcs
-                                        //     </option>
-                                        //     <option value={company.Infosys}>
-                                        //         Infosys
-                                        //     </option>
-                                        //     <option value={company.Barclays}>
-                                        //         Barclays
-                                        //     </option>
-                                        //     <option value={company.Atos}>
-                                        //         Atos
-                                        //     </option>
-                                        // </Field>
-                                    }
                                     <Field
+                                        as="select"
                                         type="number"
-                                        className="block border border-grey-light w-full p-3 rounded mt-4"
                                         name="company_id"
-                                        placeholder="Enter Company Id"
-                                    ></Field>
+                                        className={`bg-transparent block border border-grey-light w-full p-3 rounded mt-4 ${values.company_id === undefined ? 'text-gray-400' : 'text-black'}`}
+                                        onChange={handleChange}
+                                    >
+
+                                        <option value={undefined} hidden label="Select a company" className="text-gray-400">
+                                            Select a company
+                                        </option>
+                                        {
+                                            companies.map(comp => {
+                                                return <option value={comp.id} key={comp.id}>
+                                                    {comp.name}
+                                                </option>
+
+                                            })
+
+                                        }
+                                    </Field>
                                     {errors.company_id && touched.company_id ? (<div>{errors.company_id}</div>) : null}
                                     <Field
                                         type="password"

@@ -1,39 +1,42 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { IContext, MyContext } from "../MyContext";
+import BusLogo from "../assets/BusLogo.png"
+import { pages } from "../constants/constants";
 
 const Navbar = () => {
     const navigate = useNavigate()
     const {user} = React.useContext(MyContext) as IContext; 
+    const location = useLocation()
     return (
         <>
-            <nav className="bg-white w-full z-20 top-0 start-0 border-b border-gray-200">
+            <nav className="sticky bg-white w-full z-20 top-0 start-0 border-b border-gray-200 mb-4">
                 <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
                     <div className="flex items-center">
-                        <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
-                            <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
+                        <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                            <img src={BusLogo} className="h-8" alt="Flowbite Logo" />
                             <span className="self-center text-2xl font-semibold whitespace-nowrap">Shuttle</span>
-                        </a>
+                        </div>
                         <div className="items-center hidden mx-20 w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
                             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
                                 <li>
-                                    <Link to="/schedule" className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0" aria-current="page">Home</Link>
+                                    <Link to="/" className={`block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${location.pathname===pages.Home ? "text-blue-700" : "text-gray-900 " }`} aria-current="page">Home</Link>
                                 </li>
                                 <li>
-                                    <Link to="/create" className={`block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${ user !== null && user.role_id === 1 ? "hidden" : ""}`} >Create</Link>
+                                    <Link to="/create" className={`block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${location.pathname===pages.Create ? "text-blue-700" : "text-gray-900 " } ${ user !== null && user.role_id === 1 ? "hidden" : ""}`} >Create</Link>
                                 </li>
                                 <li>
-                                    <Link to="/user_reservations" className={`block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${ user !== null && user.role_id === 1 ? "" : "hidden"}`} >My reservations</Link>
+                                    <Link to="/user_reservations" className={`block py-2 px-3  ${location.pathname===pages.MyReservations ? "text-blue-700" : "text-gray-900 " } rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${ user !== null && user.role_id === 1 ? "" : "hidden"}`} >My reservations</Link>
                                 </li>
                                 <li>
-                                    <Link to="/all_reservations" className={`block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${ user !== null && user.role_id === 1 ? "hidden" : ""}`} >View reservations</Link>
+                                    <Link to="/all_reservations" className={`block py-2 px-3 ${location.pathname===pages.ViewReservations ? "text-blue-700" : "text-gray-900 " } hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${ user !== null && user.role_id === 1 ? "hidden" : ""}`} >View reservations</Link>
                                 </li>
                                 <li>
-                                    <Link to="/buses" className={`block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${ user !== null && user.role_id === 1 ? "hidden" : ""}`} >View Buses</Link>
+                                    <Link to="/buses" className={`block py-2 px-3 ${location.pathname===pages.ViewBuses ? "text-blue-700" : "text-gray-900 " } rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${ user !== null && user.role_id === 1 ? "hidden" : ""}`} >View Buses</Link>
                                 </li>
                                 <li>
-                                    <Link to="/users" className={`block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${ user !== null && user.role_id === 1 ? "hidden" : ""}`} >View Users</Link>
+                                    <Link to="/users" className={`block py-2 px-3 ${location.pathname===pages.ViewUsers ? "text-blue-700" : "text-gray-900 " } rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ${ user !== null && user.role_id === 1 ? "hidden" : ""}`} >View Users</Link>
                                 </li>
                             </ul>
                         </div>

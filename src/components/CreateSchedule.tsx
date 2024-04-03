@@ -1,7 +1,8 @@
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { ICreateSchedule } from "../interfaces/interfaces";
+import { IBus, ICreateSchedule } from "../interfaces/interfaces";
 import { createSchedule } from "../apis/apiCalls";
+import { useFetchBuses } from "../hooks/hooks";
 
 const createScheduleSchema = Yup.object().shape({
     start_point: Yup.string().required("Required"),
@@ -11,29 +12,29 @@ const createScheduleSchema = Yup.object().shape({
     bus_id: Yup.number().required("Required")
 });
 const CreateSchedule = () => {
+    const { buses }: {buses: IBus[]} = useFetchBuses()
     const initialValues: ICreateSchedule = {
         start_point: "",
         departure_time: "",
         arrival_time: "",
         date: "",
-        bus_id: NaN
+        bus_id: undefined
     };
     return (
         <>
             <div className="bg-grey-lighter min-h-screen flex flex-col">
-                <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center px-2">
+                <div className="w-4/5 mx-auto flex-1 flex flex-col items-center px-2">
                     <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
                         <h1 className="mb-8 text-3xl text-center">Create Schedule</h1>
                         <Formik
                             initialValues={initialValues}
                             validationSchema={createScheduleSchema}
                             onSubmit={(values: ICreateSchedule, { resetForm }) => {
-                                console.log(values);
                                 createSchedule(values)
                                 resetForm()
                             }}
                         >
-                            {({ errors, touched }) => (
+                            {({ errors, touched, values, handleChange }) => (
                                 <Form>
                                     <label className="block mb-2 text-lg font-medium text-gray-900 mt-4">Start point</label>
                                     <Field
@@ -75,16 +76,42 @@ const CreateSchedule = () => {
                                     {errors.date && touched.date ? (
                                         <div>{errors.date}</div>
                                     ) : null}
+
                                     <label className="block mb-2 text-lg font-medium text-gray-900 mt-4">Bus Id</label>
                                     <Field
+                                        as="select"
                                         type="number"
-                                        className="block border border-grey-light w-full p-3 rounded "
                                         name="bus_id"
-                                        placeholder="1"
-                                    />
-                                    {errors.bus_id && touched.bus_id ? (
-                                        <div>{errors.bus_id}</div>
-                                    ) : null}
+                                        className={`bg-transparent block border border-grey-light w-full p-3 rounded mt-4 ${values.bus_id === undefined ? 'text-gray-400' : 'text-black'}`}
+                                        onChange={handleChange}
+                                    >
+
+                                        <option value={undefined} hidden label="Select a company" className="text-gray-400">
+                                            Select a BusId
+                                        </option>
+                                        {
+                                            buses.map(bus => {
+                                                return <option value={bus.id} key={bus.id}>
+                                                    {bus.id}
+                                                </option>
+
+                                            })
+
+                                        }
+                                    </Field>
+                                    {errors.bus_id && touched.bus_id ? (<div>{errors.bus_id}</div>) : null}
+                                    {
+                                        //     <label className="block mb-2 text-lg font-medium text-gray-900 mt-4">Bus Id</label>
+                                        // <Field
+                                        //     type="number"
+                                        //     className="block border border-grey-light w-full p-3 rounded "
+                                        //     name="bus_id"
+                                        //     placeholder="1"
+                                        // />
+                                        // {errors.bus_id && touched.bus_id ? (
+                                        //     <div>{errors.bus_id}</div>
+                                        // ) : null}
+                                    }
                                     <button
                                         id="submit"
                                         type="submit"

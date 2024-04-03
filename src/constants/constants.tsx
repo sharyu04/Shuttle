@@ -18,11 +18,22 @@ export const sortByValues = {
     to: "to",
     arrival_time: "arrival_time",
     departure_time: "departure_time",
-    available_seats: "available_seats"
+    available_seats: "available_seats",
+    userName: "name",
+    id: "id"
 }
 
 export const components = {
-        createBus : "Bus",
-        createCompany : "company",
-        createSchedule : "schedule"
-    }
+    createBus: "Bus",
+    createCompany: "company",
+    createSchedule: "schedule"
+}
+
+export const pages = {
+    Home: "/",
+    Create: "/create",
+    MyReservations: "/user_reservations",
+    ViewReservations: "/all_reservations",
+    ViewBuses: "/buses",
+    ViewUsers: "/users"
+}
