@@ -23,7 +23,6 @@ const CreateCompany = () => {
                             initialValues={initialValues}
                             validationSchema={createCompanySchema}
                             onSubmit={(values: ICreateCompany, { resetForm }) => {
-                                console.log(values)
                                 resetForm();
                                 createCompany(values)
                             }}

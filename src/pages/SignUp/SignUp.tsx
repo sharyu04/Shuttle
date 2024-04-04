@@ -15,7 +15,7 @@ const signUpSchema = Yup.object().shape({
     first_name: Yup.string().min(2, "Too short!").max(50, "Too long").required("Required"),
     last_name: Yup.string().min(2, "Too short!").max(50, "Too long").required("Required"),
     email: Yup.string().email("Invalid Email").required("Required"),
-    phone_number: Yup.string().matches(phoneRegExp, 'Phone number is not valid').min(10, "Phone number must have 10 digits").max(10, "Phone number must have 10 digits"),
+    phone_number: Yup.string().required("Required").matches(phoneRegExp, 'Phone number is not valid').min(10, "Phone number must have 10 digits").max(10, "Phone number must have 10 digits"),
     password: Yup.string().min(6, "Password should have minimum 6 characters").minLowercase(1, "Password must contain atleast 1 lowercase letter").minUppercase(1, "Password must contain atleast 1 uppercase letter").minNumbers(1, "Password must contain atleast 1 number").minSymbols(1, "Password must contain atleast 1 special character").required("Password is required"),
     company_id: Yup.number().required("Enter a company id")});
 const SignUp = () => {
@@ -30,11 +30,7 @@ const SignUp = () => {
         company_id: undefined
     }
 
-    useEffect(() => {
-        console.log(companies)
-    }, [companies])
-
-    return (
+     return (
         <>
             <div className="bg-grey-lighter min-h-screen flex flex-col">
                 <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">

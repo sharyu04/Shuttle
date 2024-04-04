@@ -89,7 +89,6 @@ const ReservationList = ({ reservations }: IProps) => {
                             <input type="search" id="search-dropdown" className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border-s-gray border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Search reservations ..." value={searchKey} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                 e.preventDefault()
                                 setSearchKey(e.target.value)
-                                console.log(searchKey)
                             }} />
                         </div>
                     </div>

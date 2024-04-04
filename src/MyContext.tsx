@@ -13,11 +13,9 @@ const MyContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }
     const [user, setUser] = React.useState<userDetails | null>(null)
     const handleSetToken = (token: string) => {
         setBearerToken(token)
-        // console.log("bearerTokenSet")
     }
     const handleSetUser = (user: userDetails) => {
             setUser(user)
-            // console.log("user set")
         }
     return <MyContext.Provider value={{bearerToken, handleSetToken, user, handleSetUser }}>{children}</MyContext.Provider>
 }

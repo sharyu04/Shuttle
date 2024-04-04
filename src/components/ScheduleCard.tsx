@@ -13,7 +13,6 @@ const ScheduleCard = ({ schedule }: IProps) => {
     const queryClient = useQueryClient()
     const { user } = React.useContext(MyContext) as IContext;
     const [toggle, setToggle] = useState<Boolean>(false)
-    // const { company } = useFetchCompany(schedule.company_id)
     const onReserve = (e: any) => {
         e.preventDefault()
         setToggle(true)
@@ -21,8 +20,6 @@ const ScheduleCard = ({ schedule }: IProps) => {
 
     const onConfirmReservation = (e: any) => {
         e.preventDefault()
-        console.log("Schedule_id: ", schedule.id)
-        console.log("User_id: ", user?.id)
         const reqBody: ICreateReservation = {
             schedule_id: schedule.id,
             user_id: user?.id

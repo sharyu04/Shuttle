@@ -67,15 +67,13 @@ api.interceptors.request.use(config => {
 export const createReservation = (reservationBody: ICreateReservation, queryClient: any, user: userDetails | null) => {
     const body = { reservation: reservationBody }
     const response = api.post('http://localhost:3000/reservations', body)
-    response.then(async(res) => {
+    response.then(async (res) => {
         await queryClient.refetchQueries({
             queryKey: ["schedules", user]
         })
-        console.log("Reservation success")
-         toast.success("Reservation successfull")
-        
+        toast.success("Reservation successfull")
+
     }).catch(err => {
-        console.log(err.response.data[0])
         toast.error(err.response.data[0])
     })
 }

@@ -28,7 +28,6 @@ const CreateBus = () => {
                             initialValues={initialValues}
                             validationSchema={createBusSchema}
                             onSubmit={(values: ICreateBus, { resetForm }) => {
-                                console.log(values);
                                 createBus(values)
                                 resetForm()
                             }}
